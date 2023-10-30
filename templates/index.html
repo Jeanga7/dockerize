@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCII ART WEB</title>
+    <link rel="stylesheet" href="./../static/styles.css">
+    <link rel="shortcut icon" href="./../static/img/A.png">
+</head>
+
+<body>
+    <img src="/static/img/hands-background.png" alt="Background Image" class="background-image">
+    <header>
+        <h1>ASCII ART GENERATOR</h1>
+        <div id="anim1"> </div>
+        <div id="anim2"> </div>
+        <br>
+    </header>
+    <div id="page">
+        <div class="theme">
+            Switch
+        </div>
+        <script>
+            const theme = document.querySelector('.theme')
+
+            theme.addEventListener('click', () => {
+                document.body.classList.toggle('light')
+                document.cookie = document.body.classList
+            })
+
+            if (document.cookie == 'light') {
+                document.body.classList.toggle('light')
+            }
+
+        </script>
+        <div class="pre">
+            {{if .ReadyToConvert}}
+            <pre class="ascii-container">{{.AsciiDrawing}}</pre>
+            {{end}}
+        </div>
+        <form action="/ascii-art" method="post">
+
+            <div class="menu">
+                <input type="radio" id="standard" name="banner" value="standard" class="hidden-radio" checked>
+                <label for="standard" class="banner-btn selected">STANDARD</label>
+
+                <input type="radio" id="shadow" name="banner" value="shadow" class="hidden-radio">
+                <label for="shadow" class="banner-btn" id="shadow">SHADOW</label>
+
+                <input type="radio" id="thinkertoy" name="banner" value="thinkertoy" class="hidden-radio">
+                <label for="thinkertoy" class="banner-btn">THINKERTOY</label>
+            </div>
+            <div class="ba">
+                <div class="input">
+                    <textarea name="text" id="text" placeholder="Put your text here please" required>{{if ne .Text ""}}{{.Text}}{{end}}</textarea>                    
+                </div>
+
+                <button type="submit" id="submit"><b>CONVERT</b></button>
+            </div>
+        </form>
+</body>
+
+</html>
