@@ -1,8 +1,5 @@
 #!/bin/bash
-image_name="ascii"
 
-port_local="8080"
+docker image build -f Dockerfile -t ascii .
 
-docker build -t $image_name .
-
-docker run -p $port_local:8080 $image_name
+docker container run -p 8080:8080 --detach --name my_container ascii
