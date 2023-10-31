@@ -1,14 +1,15 @@
-FROM golang:1.20.5
+FROM golang:alpine
 
-LABEL mainteners="jean"
-LABEL version="1.0"
+LABEL maintainer="Gaby"
 
 WORKDIR /app
 
 COPY . .
 
-RUN go build -o ascii
+RUN go build -o dockerize
+
+RUN apk update && apk add bash
 
 EXPOSE 8080
 
-CMD ["./ascii"]
+CMD ["./dockerize"]
