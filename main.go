@@ -22,7 +22,13 @@ func main() {
 
 func SetupRoutes() {
 	http.Handle("/", handlers.Middleware(http.HandlerFunc(handlers.GetHandler)))
-	http.Handle("/ascii-art", handlers.Middleware(http.HandlerFunc(handlers.AsciiArtHandler)))
+	http.Handle("/ascii-art", handlers.Middleware(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodPost {
+			handlers.AsciiArtHandler(w, r)
+		} else {
+			handlers.RenderTemplate(w, "error405", nil, http.StatusMethodNotAllowed)
+		}
+	})))
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/error404", func(w http.ResponseWriter, r *http.Request) {
 		handlers.ErrorPageHandler(w, r, http.StatusNotFound, "error404")
